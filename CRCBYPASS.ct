@@ -1,0 +1,11 @@
+local crc_addr = 0x142C33995
+local original_bytes = { 0xE8, 0xC6, 0x5F, 0x68, 0x02 } -- Backup original
+
+function enable_patch()
+  local junk = math.random(0, 255)
+  writeBytes(crc_addr, { 0xEB, junk, junk, junk, junk }) -- JMP + random junk
+end
+
+function disable_patch()
+  writeBytes(crc_addr, original_bytes) -- Restore original
+end
